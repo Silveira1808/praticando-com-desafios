@@ -1,57 +1,26 @@
-let amigos = [];
+let totalGeral;
+limpar();
 
 function adicionar() {
-    let amigo = document.getElementById('nome-amigo');
-    if (amigo.value == '') {
-        alert('Informe o nome do amigo!');
-        return;
-    }
+    let produto = document.getElementById('produto').value;
+    let nomeProduto = produto.split('-')[0];
+    let valorUnitario = produto.split('R$')[1];
+    let quantidade = document.getElementById('quantidade').value;
+    let preco = quantidade * valorUnitario;
 
-    if (amigos.includes(amigo.value)) {
-        alert('Nome já adicionado!');
-        return;
-    }
+    let carrinho = document.getElementById('lista-produtos');
+    carrinho.innerHTML = carrinho.innerHTML + `<section class="carrinho__produtos__produto">
+    <span class="texto-azul">${quantidade}x</span> ${nomeProduto} <span class="texto-azul">R${preco}</span>
+  </section>`;
 
-    let lista = document.getElementById('lista-amigos');
-
-    amigos.push(amigo.value);
-
-    if (lista.textContent == '') {
-        lista.textContent = amigo.value;
-    } else {
-        lista.textContent = lista.textContent + ', ' + amigo.value;
-    }
-
-    amigo.value = '';
+    totalGeral = totalGeral + preco;
+    let campoTotal = document.getElementById('valor-total');
+    campoTotal.textContent = `R$ ${totalGeral}`;
+    document.getElementById('quantidade').value = 0;
 }
 
-function sortear() {
-    if (amigos.length < 4) {
-        alert('Adicione pelo menos 4 amigos!');
-        return;
-    }
-
-    embaralhar(amigos);
-
-    let sorteio = document.getElementById('lista-sorteio');
-    for (let i = 0; i < amigos.length; i++) {
-        if (i == amigos.length - 1) {
-            sorteio.innerHTML = sorteio.innerHTML + amigos[i] +' --> ' +amigos[0] + '<br/>';
-        } else {
-            sorteio.innerHTML = sorteio.innerHTML + amigos[i] +' --> ' +amigos[i + 1] + '<br/>';
-        }
-    }
-}
-
-function embaralhar(lista) {
-    for (let indice = lista.length; indice; indice--) {
-        const indiceAleatorio = Math.floor(Math.random() * indice);
-        [lista[indice - 1], lista[indiceAleatorio]] = [lista[indiceAleatorio], lista[indice - 1]];
-    }
-}
-
-function reiniciar() {
-    amigos = [];
-    document.getElementById('lista-amigos').innerHTML = '';
-    document.getElementById('lista-sorteio').innerHTML = '';
+function limpar() {
+    totalGeral = 0;
+    document.getElementById('lista-produtos').innerHTML = '';
+    document.getElementById('valor-total').textContent = 'R$0';
 }
