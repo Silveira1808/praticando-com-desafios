@@ -1,26 +1,45 @@
-let totalGeral;
-limpar();
+function comprar() {
+    let tipo = document.getElementById('tipo-ingresso');
+    let qtd = document.getElementById('qtd').value;
 
-function adicionar() {
-    let produto = document.getElementById('produto').value;
-    let nomeProduto = produto.split('-')[0];
-    let valorUnitario = produto.split('R$')[1];
-    let quantidade = document.getElementById('quantidade').value;
-    let preco = quantidade * valorUnitario;
-
-    let carrinho = document.getElementById('lista-produtos');
-    carrinho.innerHTML = carrinho.innerHTML + `<section class="carrinho__produtos__produto">
-    <span class="texto-azul">${quantidade}x</span> ${nomeProduto} <span class="texto-azul">R${preco}</span>
-  </section>`;
-
-    totalGeral = totalGeral + preco;
-    let campoTotal = document.getElementById('valor-total');
-    campoTotal.textContent = `R$ ${totalGeral}`;
-    document.getElementById('quantidade').value = 0;
+    if (tipo.value == 'pista') {
+        comprarPista(qtd);
+    } else if (tipo.value == 'superior') {
+        comprarSuperior(qtd);
+    } else {
+        comprarInferior(qtd);
+    }
 }
 
-function limpar() {
-    totalGeral = 0;
-    document.getElementById('lista-produtos').innerHTML = '';
-    document.getElementById('valor-total').textContent = 'R$0';
+function comprarPista(qtd) {
+    let qtdPista = parseInt(document.getElementById('qtd-pista').textContent);
+    if (qtd > qtdPista) {
+        alert('Quantidade indisponível para tipo pista');
+    } else {
+        qtdPista = qtdPista - qtd;
+        document.getElementById('qtd-pista').textContent = qtdPista;
+        alert('Compra realizada com sucesso!');
+    }
+}
+
+function comprarSuperior(qtd) {
+    let qtdSuperior = parseInt(document.getElementById('qtd-superior').textContent);
+    if (qtd > qtdSuperior) {
+        alert('Quantidade indisponível para tipo superior');
+    } else {
+        qtdSuperior = qtdSuperior - qtd;
+        document.getElementById('qtd-superior').textContent = qtdSuperior;
+        alert('Compra realizada com sucesso!');
+    }
+}
+
+function comprarInferior(qtd) {
+    let qtdInferior = parseInt(document.getElementById('qtd-inferior').textContent);
+    if (qtd > qtdInferior) {
+        alert('Quantidade indisponível para tipo inferior');
+    } else {
+        qtdInferior = qtdInferior - qtd;
+        document.getElementById('qtd-inferior').textContent = qtdInferior;
+        alert('Compra realizada com sucesso!');
+    }
 }
